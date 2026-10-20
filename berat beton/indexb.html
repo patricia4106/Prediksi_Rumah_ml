@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Kekuatan Tekan Beton</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h3 class="mb-2 text-center fw-bold">Prediksi Kekuatan Beton</h3>
+                        <p class="text-muted text-center mb-4">Masukkan komposisi material campuran (kg/m³) dan umur beton.</p>
+                        
+                        <form id="formBeton">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Semen (kg/m³)</label>
+                                    <input type="number" step="0.01" id="cement" class="form-control" value="280" min="0" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Blast Furnace Slag (kg/m³)</label>
+                                    <input type="number" step="0.01" id="slag" class="form-control" value="0" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Fly Ash (kg/m³)</label>
+                                    <input type="number" step="0.01" id="flyash" class="form-control" value="0" min="0" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Air / Water (kg/m³)</label>
+                                    <input type="number" step="0.01" id="water" class="form-control" value="180" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Superplasticizer (kg/m³)</label>
+                                    <input type="number" step="0.01" id="superplasticizer" class="form-control" value="5" min="0" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Agregat Kasar (kg/m³)</label>
+                                    <input type="number" step="0.01" id="coarseagg" class="form-control" value="950" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Agregat Halus (kg/m³)</label>
+                                    <input type="number" step="0.01" id="fineagg" class="form-control" value="750" min="0" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Umur Beton (Hari)</label>
+                                    <input type="number" id="age" class="form-control" value="28" min="1" required>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100 py-2 mt-2">Hitung Kekuatan Tekan</button>
+                        </form>
+
+                        <div id="hasilBox" class="mt-4 p-3 bg-white border rounded text-center d-none">
+                            <span class="text-muted small">Estimasi Kekuatan Tekan Beton:</span>
+                            <h4 id="teksKekuatan" class="text-primary fw-bold mt-1 mb-0">0 MPa</h4>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formBeton').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let cement = parseFloat(document.getElementById('cement').value);
+            let slag = parseFloat(document.getElementById('slag').value);
+            let flyash = parseFloat(document.getElementById('flyash').value);
+            let water = parseFloat(document.getElementById('water').value);
+            let sp = parseFloat(document.getElementById('superplasticizer').value);
+            let coarse = parseFloat(document.getElementById('coarseagg').value);
+            let fine = parseFloat(document.getElementById('fineagg').value);
+            let age = parseFloat(document.getElementById('age').value);
+
+            let baseStrength = (cement * 0.08) + (slag * 0.06) + (flyash * 0.04) - (water * 0.12) + (sp * 0.5) + (Math.log(age + 1) * 4.5) + 5;
+            
+            if (baseStrength < 2) baseStrength = 2.33;
+
+            document.getElementById('teksKekuatan').innerText = baseStrength.toFixed(2) + ' MPa';
+            document.getElementById('hasilBox').classList.remove('d-none');
+        });
+    </script>
+
+</body>
+</html>
