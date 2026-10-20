@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Harga Rumah</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h3 class="mb-3 text-center fw-bold">Prediksi Harga Rumah</h3>
+                        <p class="text-muted text-center mb-4">Masukkan spesifikasi rumah untuk melihat estimasi harga.</p>
+                        
+                        <form id="formRumah">
+                            <div class="mb-3">
+                                <label class="form-label">Luas Tanah (m²)</label>
+                                <input type="number" id="luasTanah" class="form-control" value="120" min="1" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Luas Bangunan (m²)</label>
+                                <input type="number" id="luasBangunan" class="form-control" value="90" min="1" required>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Jumlah Kamar Tidur</label>
+                                    <input type="number" id="kamarTidur" class="form-control" value="3" min="1" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Jumlah Kamar Mandi</label>
+                                    <input type="number" id="kamarMandi" class="form-control" value="2" min="1" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label">Lokasi</label>
+                                <select id="lokasi" class="form-select">
+                                    <option value="1">Pinggiran Kota</option>
+                                    <option value="2" selected>Kawasan Penyangga</option>
+                                    <option value="3">Pusat Kota</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100 py-2">Hitung Harga</button>
+                        </form>
+
+                        <div id="hasilBox" class="mt-4 p-3 bg-white border rounded text-center d-none">
+                            <span class="text-muted small">Estimasi Harga Rumah:</span>
+                            <h4 id="teksHarga" class="text-primary fw-bold mt-1 mb-0">Rp 0 Juta</h4>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formRumah').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let lt = parseFloat(document.getElementById('luasTanah').value);
+            let lb = parseFloat(document.getElementById('luasBangunan').value);
+            let kt = parseInt(document.getElementById('kamarTidur').value);
+            let km = parseInt(document.getElementById('kamarMandi').value);
+            let lok = parseInt(document.getElementById('lokasi').value);
+
+            let total = (lt * 3) + (lb * 4.5) + (kt * 50) + (km * 30) + (lok * 150);
+
+            document.getElementById('teksHarga').innerText = 'Rp ' + total.toLocaleString('id-ID') + ' Juta';
+            document.getElementById('hasilBox').classList.remove('d-none');
+        });
+    </script>
+
+</body>
+</html>
